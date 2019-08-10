@@ -76,10 +76,10 @@ class HomeFragment : BaseFragment(), HomeView, TrendingAdapter.onUpVote, Trendin
     override fun onGifsAvailabale(it: GifsResponse) {
         list.addAll(it.data)
         for (i in upvoteList) {
-            for(j in it.data)
-            if (j.id== i.Id) {
-                j.isUpvote = 1
-            }
+            for (j in it.data)
+                if (j.id == i.Id) {
+                    j.isUpvote = 1
+                }
         }
         for (i in downvoteList) {
             for (j in it.data)
@@ -112,7 +112,7 @@ class HomeFragment : BaseFragment(), HomeView, TrendingAdapter.onUpVote, Trendin
     private lateinit var downvoteList: List<Rating>
 
     override fun onDownRatingAvailable(ratingList: List<Rating>) {
-        downvoteList=ratingList
+        downvoteList = ratingList
         downvoteCount.setText("DownVote " + ratingList.size)
 
 
@@ -121,7 +121,7 @@ class HomeFragment : BaseFragment(), HomeView, TrendingAdapter.onUpVote, Trendin
     private lateinit var upvoteList: List<Rating>
 
     override fun onUpVoteRatingAvailable(ratingList: List<Rating>) {
-        upvoteList=ratingList
+        upvoteList = ratingList
         upvoteCount.setText("UpVote " + ratingList.size)
     }
 
