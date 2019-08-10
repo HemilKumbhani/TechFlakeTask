@@ -17,6 +17,7 @@ class AppDataManger
     private val dbHelper: DbHelper,
     private val apiServices: ApiServices
 ) : DataManager {
+
     override fun getUpvoteRating(): Observable<List<Rating>> {
         return dbHelper.getUpvoteRating()
     }

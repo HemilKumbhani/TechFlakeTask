@@ -11,4 +11,5 @@ interface DbHelper {
     fun getUpvoteRating(): Observable<List<Rating>>
 
     fun getDownvoteRating(): Observable<List<Rating>>
+
 }

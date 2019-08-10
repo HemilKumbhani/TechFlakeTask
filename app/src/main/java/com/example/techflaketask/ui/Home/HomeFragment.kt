@@ -39,7 +39,7 @@ class HomeFragment : BaseFragment(), HomeView, TrendingAdapter.onUpVote, Trendin
 
         mAdapter = TrendingAdapter(mActivity, this, this)
         recyclerGiphy.adapter = mAdapter
-        viewModel.ongetTotalCount()
+        viewModel.getUpDownTotalCount()
 
         recyclerGiphy.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -75,14 +75,28 @@ class HomeFragment : BaseFragment(), HomeView, TrendingAdapter.onUpVote, Trendin
 
     override fun onGifsAvailabale(it: GifsResponse) {
         list.addAll(it.data)
+        for (i in upvoteList) {
+            for(j in it.data)
+            if (j.id== i.Id) {
+                j.isUpvote = 1
+            }
+        }
+        for (i in downvoteList) {
+            for (j in it.data)
+                if (j.id == i.Id) {
+                    j.isDownVote = 1
+
+                }
+        }
         mAdapter.onDataAvailable(list)
+
     }
 
     override fun onUpVotePerformed(position: Int) {
         list[position].isUpvote = 1
         list[position].isDownVote = 0
         mAdapter.notifyItemChanged(position)
-        viewModel.ongetTotalCount()
+        viewModel.getUpDownTotalCount()
 
     }
 
@@ -90,18 +104,25 @@ class HomeFragment : BaseFragment(), HomeView, TrendingAdapter.onUpVote, Trendin
         list[position].isDownVote = 1
         list[position].isUpvote = 0
         mAdapter.notifyItemChanged(position)
-        viewModel.ongetTotalCount()
+        viewModel.getUpDownTotalCount()
 
 
     }
 
-    override fun onDownRatingAvailable(size: Int) {
-        downvoteCount.setText("DownVote " + size)
+    private lateinit var downvoteList: List<Rating>
+
+    override fun onDownRatingAvailable(ratingList: List<Rating>) {
+        downvoteList=ratingList
+        downvoteCount.setText("DownVote " + ratingList.size)
+
 
     }
 
-    override fun onUpVoteRatingAvailable(size: Int) {
-        upvoteCount.setText("Upvote " + size)
+    private lateinit var upvoteList: List<Rating>
+
+    override fun onUpVoteRatingAvailable(ratingList: List<Rating>) {
+        upvoteList=ratingList
+        upvoteCount.setText("UpVote " + ratingList.size)
     }
 
 

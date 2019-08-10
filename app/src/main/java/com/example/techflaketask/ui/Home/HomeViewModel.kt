@@ -58,27 +58,26 @@ class HomeViewModel
 
     }
 
-    fun ongetTotalCount() {
+    fun getUpDownTotalCount() {
         mCompositeDisposable.add(appDataManger.getUpvoteRating()
             .observeOn(mSchedulerProvider.io())
             .concatMap {
 
-                mView?.onUpVoteRatingAvailable(it.size)
+                mView?.onUpVoteRatingAvailable(it)
                 return@concatMap appDataManger.getDownvoteRating()
 
             }
             .subscribeOn(mSchedulerProvider.io())
             .observeOn(mSchedulerProvider.ui())
             .subscribe({
-                mView?.onDownRatingAvailable(it.size)
+                mView?.onDownRatingAvailable(it)
 
             }, {
 
             })
         )
-
-
     }
+
 
     fun onDownVoteClick(rating: Rating, position: Int) {
         mCompositeDisposable.add(appDataManger.insertRating(rating)

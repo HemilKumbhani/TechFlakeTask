@@ -20,6 +20,7 @@ class TrendingAdapter(var context: Context, var onupVote: onUpVote, var ondownVo
     RecyclerView.Adapter<ViewHolder>() {
 
     private var gifsList: ArrayList<Data> = arrayListOf()
+
     val requestOptions = RequestOptions().placeholder(R.drawable.placeholder).fitCenter()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var view = LayoutInflater.from(context).inflate(R.layout.item_gifs, parent, false)
@@ -55,7 +56,11 @@ class TrendingAdapter(var context: Context, var onupVote: onUpVote, var ondownVo
         }
     }
 
-    fun onDataAvailable(list: ArrayList<Data>) {
+    fun onDataAvailable(
+        list: ArrayList<Data>
+
+    ) {
+
         gifsList = list
         notifyDataSetChanged()
     }
@@ -73,9 +78,17 @@ class TrendingAdapter(var context: Context, var onupVote: onUpVote, var ondownVo
 
 class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(data: Data, context: Context, requestOptions: RequestOptions) {
+    fun bind(
+        data: Data,
+        context: Context,
+        requestOptions: RequestOptions
+
+    ) {
         itemView.imgUpVote.setImageResource(R.drawable.ic_like)
         itemView.imgDownVote.setImageResource(R.drawable.ic_like)
+
+
+
         if (data.isUpvote == 1) {
             itemView.imgUpVote.setImageResource(R.drawable.ic_like_selected)
             itemView.imgDownVote.setImageResource(R.drawable.ic_like)
